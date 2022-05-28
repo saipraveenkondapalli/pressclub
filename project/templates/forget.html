@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <<meta charset="utf-8" lang="eng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Press Club</title>
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allison&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cedarville+Cursive&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/fonts/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/Login-screen.css')}}">
+</head>
+
+<body>
+   <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background: var(--bs-indigo);">
+        <div class="container"><a class="navbar-brand" href="{{url_for('index')}}" style="font-family: 'Cedarville Cursive', serif;color: white;">Press Club&nbsp;</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item" style="color: white;"><a class="nav-link" href="/reports" style="color: white;">reports</a></li>
+                    <li class="nav-item" style="color: white;"><a class="nav-link" href="/login" style="font-family: 'Open Sans', sans-serif;color: white;">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="height: 600px;margin: 2px;">
+        <form class="login-one-form" method="post" style="color: var(--bs-body-color);background: #ffffff;">
+            <div class="col">
+                <div class="login-one-ico"><i class="fa fa-unlock-alt" id="lockico"></i></div>
+                <div class="form-group mb-3"  style="height: 250px;">
+                    <div>
+                        <h3 id="heading">Forget password</h3>
+                    </div><input class="form-control"  name ="username" type="text" id="input-1" placeholder="Username">
+                    <button class="btn btn-primary" id="button" style="width: 250px;background: blue;border-radius: 5px;margin-top: 15px;" type="submit">Reset</button>
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class=flashes style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-style: italic;">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+                    <a href="{{url_for('login')}}" style="color: green;"><em><span style="text-decoration: underline;">Login</span></em></a>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p></p>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 col-lg-8 mx-auto">
+                                <p class="text-muted copyright" style="color: var(--bs-red);">Copyright&nbsp;©&nbsp; Pragati Press Club - 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+   <script src="{{url_for('static', filename = 'assets/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'assets/js/clean-blog.js')}}"></script>
+</body>
+
+</html>

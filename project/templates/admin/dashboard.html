@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" lang="eng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard</title>
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allison&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cedarville+Cursive&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/fonts/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/Login-screen.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background: var(--bs-indigo);">
+                    <div class="container"><a class="navbar-brand" href="/dashboard" style="font-family: 'Cedarville Cursive', serif;color: white;">Press Club&nbsp;</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item"><a class="nav-link" href="{{url_for('dashboard')}}" style="color: white;">Dashboard</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="{{url_for('add_member')}}" style="color: white;">Add member</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="/reports" style="color: white;">reports</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/team" style="color: white;">Team members</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="/admin_profile" style="color: white;">profile</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="/logout" style="color: white;">Logout</a></li>
+                                <li class="nav-item dropdown" style="color: white"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: white;">Coordinator</a>
+                                    <div class="dropdown-menu" style="background: var(--bs-indigo);"><a class="dropdown-item" href="/assign_coordinator" style="color: white;">Assign Coordinator</a><a class="dropdown-item" href="revoke_coordinator" style="color: white;">Revoke Coordinator</a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1 style="margin-top: 100px;"><em>{{current_user.name}}'s Dashboard&nbsp;</em></h1>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body" style="margin-top: 10px;border-style: none;">
+                <h4 class="card-title">Upcoming Meeting</h4>
+                <p class="card-text"><em>
+                    <strong>Title: </strong>{{next.title}}</em><br><em>
+                    <strong>Meeting No: </strong>{{next.meeting_id}}</em><br><em>
+                    <strong>Venue: </strong>{{next.venue}}</em><br><em>
+                    <strong>Date: </strong>{{next.date}}</em><br>
+                    <strong><em>Timings: </strong>{{next.time}}</em><br><br></p>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 20px;">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Last Meeting</h4>
+                <p class="card-text" style="color: black;">
+                    <em><strong>Meeting No: </strong>{{prev.meeting_id}}</em>
+                    <br><em><strong>Title: </strong>{{prev.title}}<br></em>
+                    <em><strong>Venue: </strong>{{next.venue}}</em>
+                    <br><em><strong>Date: </strong>{{prev.date}}</em>
+                    <br><em><strong>Timings: </strong>{{prev.time}}</em>
+                    <br><em><strong>Attendance: </strong>{{prev.attendance}}</em>
+                    <br><em><strong>Report:&nbsp;</strong> &nbsp;</em>
+                    <a href="/view_report/{{prev.meeting_id}}" style="color: blue;"><em>click here</em></a>
+                </p>
+            </div>
+
+    </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 40px">
+            <div class="col">
+                <h1>Badges</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <p><em>Students with badges: {{dcount}}</em></p><a class="card-link" href="/distribute_badges" style="color: blue;"><em>Distribute</em></a
+                    ><a class="card-link" href="/badge_distributed_list" style="color: blue;"><em>Distributed list</em></a>
+                        <h4 class="card-title"></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"><em>Students returned badges: {{rcount}}</em></p><a class="card-link" href="/return_badges" style="color: blue;"><em>Return</em></a>
+                        <a class="card-link" href="/badge_returned_list" style="color: blue;"><em>Returned list</em></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col">
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 col-lg-8 mx-auto">
+                                <p class="text-muted copyright" style="color: var(--bs-red);">Copyright&nbsp;©&nbsp; Pragati Press Club -2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+   <script src="{{url_for('static', filename = 'assets/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'assets/js/clean-blog.js')}}"></script>
+</body>
+</html>

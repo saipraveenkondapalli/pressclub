@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" lang="eng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Press Club</title>
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allison&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cedarville+Cursive&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/fonts/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/Login-screen.css')}}">
+</head>
+
+<body style="margin-top: 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background: var(--bs-indigo);">
+                    <div class="container"><a class="navbar-brand" href="/dashboard" style="font-family: 'Cedarville Cursive', serif;color: white;">Press Club&nbsp;</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item"><a class="nav-link" href="{{url_for('dashboard')}}" style="color: white;">Dashboard</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="{{url_for('add_member')}}" style="color: white;">Add member</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="/reports" style="color: white;">reports</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/team" style="color: white;">Team members</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="/admin_profile" style="color: white;">profile</a></li>
+                                <li class="nav-item" style="color: white;"><a class="nav-link" href="/logout" style="color: white;">Logout</a></li>
+                                <li class="nav-item dropdown" style="color: white"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="color: white;">Coordinator</a>
+                                    <div class="dropdown-menu" style="background: var(--bs-indigo);"><a class="dropdown-item" href="/assign_coordinator" style="color: white;">Assign Coordinator</a><a class="dropdown-item" href="revoke_coordinator" style="color: white;">Revoke Coordinator</a></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 100px;">
+        <form method="post">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Team List</h4>
+                    <h5>year</h5><select class="form-select" name = "year" style="margin-top: 10px;">
+                        <option value="0" selected="">All</option>
+                        <option value="1">1 year</option>
+                        <option value="2">2 year</option>
+                        <option value="3">3 year</option>
+                        <option value="4">4 year</option>
+                    </select>
+                    <h5 style="margin-top: 10px;margin-bottom: 10px;">Department</h5><select  name ="department" class="form-select">
+                            <option value="0">All</option>
+                            <option value="CSE">CSE</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="CIVIL">CIVIL</option>
+                            <option value="MECH">Mech</option>
+                            <option value="CSE-AI">CSE- AI</option>
+                            <option value="CSE-AI&ML">CSE- AI &amp;ML</option>
+                            <option value="CSE-DS">CSE- DS</option>
+                        <option value="IT">IT</option>
+                    </select><button class="btn btn-primary" type="submit" style="margin-top: 10px;margin-bottom: 10px;background: blue;border-radius: 5px;">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-lg-8 mx-auto">
+                        <p class="text-muted copyright" style="color: var(--bs-red);">Copyright&nbsp;©&nbsp; Pragati Press Club -2022</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="{{url_for('static', filename = 'assets/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename = 'assets/js/clean-blog.js')}}"></script>
+</body>
+
+</html>
