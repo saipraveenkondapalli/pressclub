@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" lang="eng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home</title>
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allison&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cedarville+Cursive&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
+     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/fonts/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/Login-screen.css')}}">
+</head>
+<body>
+<nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background: var(--bs-indigo);">
+        <div class="container"><a class="navbar-brand" href="{{url_for('index')}}" style="font-family: 'Cedarville Cursive', serif;color: white;">Press Club&nbsp;</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"></li>
+                    <li class="nav-item" style="color: white;"><a class="nav-link" href="/reports" style="color: white;">reports</a></li>
+                    <li class="nav-item" style="color: white;"><a class="nav-link" href="/login" style="font-family: 'Open Sans', sans-serif;color: white;">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% block content %}
+
+
+{% endblock %}
+<footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-8 mx-auto">
+                    <p class="text-muted copyright" style="color: var(--bs-red);">Copyright&nbsp;©&nbsp; Pragati Press Club -2022</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/clean-blog.js"></script>
+</body>
+</html>

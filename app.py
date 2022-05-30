@@ -1,5 +1,5 @@
-from project import routes, aroutes, sroutes, croutes, badge_routes, report_routes
+from project import routes, aroutes, sroutes, croutes, badge_routes, report_routes, app
 
 
 if __name__ == "__main__":
-	app.run()
+	app.run(debug = True)

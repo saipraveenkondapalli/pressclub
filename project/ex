@@ -1,0 +1,4 @@
+{ % extends "coordinator.html" %}
+
+{% block content %}
+{ % endblock %}

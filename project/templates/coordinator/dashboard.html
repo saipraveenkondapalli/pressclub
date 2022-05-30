@@ -1,40 +1,6 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" lang="eng">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard</title>
-     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allison&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cedarville+Cursive&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&amp;display=swap">
-     <link rel="stylesheet" href="{{url_for('static',filename = 'assets/fonts/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/css/Login-screen.css')}}">
-</head>
-
-<body>
-    <div class="container">
-        <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="mainNav" style="background: var(--bs-indigo);">
-            <div class="container"><a class="navbar-brand" href="/dashboard" style="font-family: 'Cedarville Cursive', serif;color: white;">Press Club&nbsp;</a><button data-bs-toggle="collapse" data-bs-target="#navbarResponsive" class="navbar-toggler" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="/dashboard" style="color: white;">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/add_event" style="color: white;">add event</a></li>
-                        <li class="nav-item" style="color: white;"><a class="nav-link" href="/reports" style="color: white;">reports</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/assign_report" style="color: white;">assign report</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/coordinator/team" style="color: white;">Team members</a></li>
-                        <li class="nav-item" style="color: white;"><a class="nav-link" href="/coordinator/profile" style="color: white;">profile</a></li>
-                        <li class="nav-item" style="color: white;"><a class="nav-link" href="/logout" style="color: white;">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
+{%  extends "coordinator/coordinator_base.html" %}
+{% block title %} Dashboard {% endblock %}
+{% block content %}
     <div class="container">
         <h1 style="margin-top: 100px;">{{current_user.name}}'s&nbsp;dashboard- <em>coordinator</em></h1>
     </div>
@@ -74,26 +40,11 @@
                     <em>Venue: {{next.venue}}</em>
                     <br><em>Date: {{prev.date}}</em>
                     <br><em>Timings: {{prev.time}}</em>
-                    <br><em>Attendance:</em>
+                    <br><em>Attendance: {{ prev.attendance }}</em>
                     <br><em>Report:&nbsp; &nbsp;</em>
-                    <a href="#" style="color: blue;"><em>click here</em></a>
+                    <a href=/view_report/{{ prev.meeting_id }} style="color: blue;"><em>click here</em></a>
                 </p>
             </div>
         </div>
     </div>
-    <div class="container">
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10 col-lg-8 mx-auto">
-                        <p class="text-muted copyright" style="color: green;">Copyright&nbsp;©&nbsp; Pragati Press Club -2022</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-    <script src="{{url_for('static', filename = 'assets/bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{url_for('static', filename = 'assets/js/clean-blog.js')}}"></script>
-</body>
-
-</html>
+{% endblock %}

@@ -76,4 +76,3 @@ def badge_returned_list():
         return render_template('admin/badge_list.html', students=students, state=state)
     else:
         return "You are not authorized to view this page"
-git 
