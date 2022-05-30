@@ -156,10 +156,10 @@ def attendance(id):
             db.session.commit()
             for user in users:
                 if user.username in attendees:
-                    user_attendance = Attendance(roll_no=user.username, name=user.name, meeting_id=id, status=1)
+                    user_attendance = Attendance(roll_no=user.username, meeting_id=id, status=1)
                     db.session.add(user_attendance)
                 else:
-                    user_attendance = Attendance(roll_no=user.username, name=user.name, meeting_id=id, status=0)
+                    user_attendance = Attendance(roll_no=user.username, meeting_id=id, status=0)
                     db.session.add(user_attendance)
             db.session.commit()
             return f"""<script>window.alert('Attendance updated successfully');window.location='/dashboard';</script>"""
