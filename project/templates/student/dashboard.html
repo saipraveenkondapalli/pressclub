@@ -3,42 +3,62 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-
 <div class="container">
         <h1 style="margin-top: 100px;">{{current_user.name}}'s&nbsp;dashboard</h1>
-</div>
-    <div class="container" style="margin-top: 20px;">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Next Meeting </h4>
-                <p class="card-text">
-                    <em><strong>Meeting No:</strong> {{next.meeting_id}}</em>
-                    <br><strong>Title:</strong> {{next.title}}
-                    <br><em><strong>Venue:</strong> {{next.venue}}</em>
-                    <br><em><strong>Date:</strong> {{next.date}}</em>
-                    <br><em><strong>Timings:</strong> {{next.time}}</em>
-                </p>
-                {% if current_user.username == author %}
-                <a class="card-link" href="/write_report/{{next.meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
-                {% endif %}
+    </div>
+
+{% if events[0] %}
+
+        <div class="container" style="margin-top: 20px;height: 320px;">
+            <div class="card">
+                <div class="card-body" style="height: 320px;">
+                    <h4 class="card-title">Next Meeting</h4>
+                    <p class="card-text" style="color: black; font-style: italic">
+                        <em>Meeting No: {{events[0].meeting_id}}</em>
+                        <br>Title: {{events[0].title}}
+                        <br><em>Venue: {{events[0].venue}}</em>
+                        <br><em>Date: {{events[0].date}}</em>
+                        <br><em>Timings: {{events[0].time}}</em>
+                    </p>
+                    {% if current_user.username == (events[0].author).split(',')[1] %}
+                    <a class="card-link" href="/write_report/{{events[0].m3weeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
+                    {% endif %}
+                    {% if current_user.username == (events[0].author).split(';')[1] %}
+                        {% if events[0].report %}
+                    <a class="card-link" href="/write_report/{{events[0].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Edit Report</em></a>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
             </div>
         </div>
-    </div>
-     <div class="container" style="margin-top: 20px;">
+    {% endif %}
+{% if events[1] %}
+    <div class="container" style="margin-top: 20px;">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Last Meeting</h4>
                 <p class="card-text" style="color: black;">
-                    <em><strong>Meeting No: </strong>{{prev.meeting_id}}</em>
-                    <br><em><strong>Title: </strong>{{prev.title}}<br></em>
-                    <em><strong>Venue: </strong>{{next.venue}}</em>
-                    <br><em><strong>Date: </strong>{{prev.date}}</em>
-                    <br><em><strong>Timings: </strong>{{prev.time}}</em>
-                    <br><em><strong>Attendance: </strong>{{prev.attendance}}</em>
-                    <br><em><strong>Report:&nbsp;</strong> &nbsp;</em>
-                    <a href="/view_report/{{ prev.meeting_id }}" style="color: blue;"><em>click here</em></a>
+                    <em>Meeting No:{{events[1].meeting_id}}</em>
+                    <br><em>Title: {{events[1].title}}<br></em>
+                    <em>Venue: {{events[1].venue}}</em>
+                    <br><em>Date: {{events[1].date}}</em>
+                    <br><em>Timings: {{events[1].time}}</em>
+                    <br><em>Attendance: {{ events[1].attendance }}</em>
+                    <br><em>Report:&nbsp; &nbsp;</em>
+                    <a href=/view_report/{{ events[1].meeting_id }} style="color: blue;"><em>click here</em></a>
+                    {% if current_user.username == (events[1].author).split(',')[1] %}
+                    <a class="card-link" href="/write_report/{{events[1].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;padding-left: 10px"><em>Write Report</em></a>
+                    {% endif %}
+      {% if events[1].report %}
+                    {% if current_user.username == (events[1].author).split(';')[1] %}
+                    <a class="card-link" href="/write_report/{{events[1].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;padding-left: 10px"><em>Edit Report</em></a>
+                        {% endif %}
+                    {% endif %}
                 </p>
             </div>
         </div>
     </div>
+{% endif %}
+
 {% endblock %}

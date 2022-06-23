@@ -4,47 +4,62 @@
     <div class="container">
         <h1 style="margin-top: 100px;">{{current_user.name}}'s&nbsp;dashboard- <em>coordinator</em></h1>
     </div>
-    <div class="container" style="margin-top: 20px;height: 320px;">
-        <div class="card">
-            <div class="card-body" style="height: 320px;">
-                <h4 class="card-title">Next Meeting</h4>
-                <p class="card-text" style="color: black; font-style: italic">
-                    <em>Meeting No: {{next.meeting_id}}</em>
-                    <br>Title: {{next.title}}
-                    <br><em>Venue: {{next.venue}}</em>
-                    <br><em>Date: {{next.date}}</em>
-                    <br><em>Timings: {{next.time}}</em>
-                </p>
-                <a class="card-link" href="/edit_event/{{next.meeting_id}}" style="color: blue;font-style: italic;text-decoration:  underline;"><em>Edit Event</em></a>
-                <a class="card-link" href="/assign_report" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Assign Report</em></a>
-                <a class="card-link" href="/attendance/{{next.meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Take attendance</em></a>
-                {% if current_user.username == author %}
-                <a class="card-link" href="/write_report/{{next.meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
-                {% endif %}
-                {% if current_user.username == author %}
-                    {% if next.report %}
-                <a class="card-link" href="/write_report/{{next.meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Edit Report</em></a>
-                    {% endif %}
-                {% endif %}
 
+    {% if events[0] %}
+        
+        <div class="container" style="margin-top: 20px;height: 320px;">
+            <div class="card">
+                <div class="card-body" style="height: 320px;">
+                    <h4 class="card-title">Next Meeting</h4>
+                    <p class="card-text" style="color: black; font-style: italic">
+                        <em>Meeting No: {{events[0].meeting_id}}</em>
+                        <br>Title: {{events[0].title}}
+                        <br><em>Venue: {{events[0].venue}}</em>
+                        <br><em>Date: {{events[0].date}}</em>
+                        <br><em>Timings: {{events[0].time}}</em>
+                    </p>
+                    <a class="card-link" href="/edit_event/{{events[0].meeting_id}}" style="color: blue;font-style: italic;text-decoration:  underline;"><em>Edit Event</em></a>
+                    <a class="card-link" href="/assign_report" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Assign Report</em></a>
+                    <a class="card-link" href="/attendance/{{events[0].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Take attendance</em></a>
+                    {% if current_user.username == (events[0].author).split(',')[1] %}
+                    <a class="card-link" href="/write_report/{{events[0].m3weeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
+                    {% endif %}
+                    {% if current_user.username == (events[0].author).split(';')[1] %}
+                        {% if events[0].report %}
+                    <a class="card-link" href="/write_report/{{events[0].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Edit Report</em></a>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
+{% if events[1] %}
     <div class="container" style="margin-top: 20px;">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Last Meeting</h4>
                 <p class="card-text" style="color: black;">
-                    <em>Meeting No:{{prev.meeting_id}}</em>
-                    <br><em>Title: {{prev.title}}<br></em>
-                    <em>Venue: {{next.venue}}</em>
-                    <br><em>Date: {{prev.date}}</em>
-                    <br><em>Timings: {{prev.time}}</em>
-                    <br><em>Attendance: {{ prev.attendance }}</em>
+                    <em>Meeting No:{{events[1].meeting_id}}</em>
+                    <br><em>Title: {{events[1].title}}<br></em>
+                    <em>Venue: {{events[1].venue}}</em>
+                    <br><em>Date: {{events[1].date}}</em>
+                    <br><em>Timings: {{events[1].time}}</em>
+                    <br><em>Attendance: {{ events[1].attendance }}</em>
                     <br><em>Report:&nbsp; &nbsp;</em>
-                    <a href=/view_report/{{ prev.meeting_id }} style="color: blue;"><em>click here</em></a>
+                    <a href=/view_report/{{ events[1].meeting_id }} style="color: blue;"><em>click here</em></a>
+                    {% if current_user.username == (events[1].author).split(',')[1] %}
+                    <a class="card-link" href="/write_report/{{events[1].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;padding-left: 10px"><em>Write Report</em></a>
+                    {% endif %}
+      {% if events[1].report %}
+                    {% if current_user.username == (events[1].author).split(';')[1] %}
+                    <a class="card-link" href="/write_report/{{events[1].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;padding-left: 10px"><em>Edit Report</em></a>
+                        {% endif %}
+                    {% endif %}
                 </p>
             </div>
         </div>
     </div>
+{% endif %}
+
 {% endblock %}

@@ -216,3 +216,17 @@ def student_list_fun(department, year):
     return students
 
 
+@app.route('/delete_event/<id>', methods=['GET', 'POST'])
+@login_required
+def delete_event(id):
+    if current_user.type == "coordinator":
+        try:
+            db.session.query(Events).filter(Events.meeting_id == id).delete()
+            db.session.commit()
+            return f"""<script>window.alert('Event {id} deleted successfully');window.location='/dashboard';</script>"""
+
+        except:
+            return f"""<script>window.alert('Invalid Meeting Id');window.location='/dashboard';</script>"""
+
+    else:
+        return "You are not authorized to view this page"

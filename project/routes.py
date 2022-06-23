@@ -4,9 +4,6 @@ from project import app, db, bcrypt
 from project.models import User, Events
 from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired, BadSignature
 from project.mails import forget_password_mail_async as send_mail
-from project.functions import allowed_file
-from werkzeug.utils import secure_filename
-import os
 
 
 @app.route('/')
@@ -22,6 +19,8 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -43,20 +42,21 @@ def login():
 def dashboard():
     if current_user.is_authenticated:
         events = Events.query.filter_by().order_by(Events.meeting_id.desc()).limit(2)
-        try:
+        """ try:
             next = events[0]
             prev = events[1]
             author = (next.author).split(',')[1]
         except:
-            author = "no"
+            author = "no" """
         if current_user.type == "admin":
             dcount = User.query.filter_by(badge="1").count()
             rcount = User.query.filter_by(badge="2").count()
-            return render_template('admin/dashboard.html', next = next, prev=prev, author=author, dcount=dcount, rcount=rcount)
+            return render_template('admin/dashboard.html', next=next, dcount=dcount,
+                                   rcount=rcount)
         elif current_user.type == "student":
-            return render_template('student/dashboard.html', next = next, prev=prev, author=author)
+            return render_template('student/dashboard.html',events= events )
         elif current_user.type == "coordinator":
-            return render_template('coordinator/dashboard.html', next = next, prev=prev, author=author)
+            return render_template('coordinator/dashboard.html', events= events)
         else:
             return "<h1>You are not authorized to access this page</h1>"
 
@@ -157,7 +157,7 @@ def change_passowrd():
                 flash('Password dont match!', 'danger')
         else:
             flash('Wrong current password!', 'danger')
-    if current.type == "coordinator":
+    if current_user.type == "coordinator":
         return render_template('coordinator/change_password.html')
     elif current_user.type == "student":
         return render_template('student/change_password.html')
@@ -165,4 +165,3 @@ def change_passowrd():
         return render_template('admin/change_password.html')
     else:
         return """<script>alert("Invalid user type");window.location='/';</script>"""
-
