@@ -12,11 +12,11 @@
             <div class="card-body" style="margin-top: 10px;border-style: none;">
                 <h4 class="card-title">Upcoming Meeting</h4>
                 <p class="card-text"><em>
-                    <strong>Title: </strong>{{next.title}}</em><br><em>
-                    <strong>Meeting No: </strong>{{next.meeting_id}}</em><br><em>
-                    <strong>Venue: </strong>{{next.venue}}</em><br><em>
-                    <strong>Date: </strong>{{next.date}}</em><br>
-                    <strong><em>Timings: </strong>{{next.time}}</em><br><br></p>
+                    <strong>Title: </strong>{{events[0].title}}</em><br><em>
+                    <strong>Meeting No: </strong>{{events[0].meeting_id}}</em><br><em>
+                    <strong>Venue: </strong>{{events[0].venue}}</em><br><em>
+                    <strong>Date: </strong>{{events[0].date}}</em><br>
+                    <strong><em>Timings: </strong>{{events[0].time}}</em><br><br></p>
                 </p>
             </div>
         </div>
@@ -26,17 +26,16 @@
             <div class="card-body">
                 <h4 class="card-title">Last Meeting</h4>
                 <p class="card-text" style="color: black;">
-                    <em><strong>Meeting No: </strong>{{prev.meeting_id}}</em>
-                    <br><em><strong>Title: </strong>{{prev.title}}<br></em>
-                    <em><strong>Venue: </strong>{{next.venue}}</em>
-                    <br><em><strong>Date: </strong>{{prev.date}}</em>
-                    <br><em><strong>Timings: </strong>{{prev.time}}</em>
-                    <br><em><strong>Attendance: </strong>{{prev.attendance}}</em>
+                    <em><strong>Meeting No: </strong>{{events[1].meeting_id}}</em>
+                    <br><em><strong>Title: </strong>{{events[1].title}}<br></em>
+                    <em><strong>Venue: </strong>{{events[1].venue}}</em>
+                    <br><em><strong>Date: </strong>{{events[1].date}}</em>
+                    <br><em><strong>Timings: </strong>{{events[1].time}}</em>
+                    <br><em><strong>Attendance: </strong>{{events[1].attendance}}</em>
                     <br><em><strong>Report:&nbsp;</strong> &nbsp;</em>
-                    <a href="/view_report/{{prev.meeting_id}}" style="color: blue;"><em>click here</em></a>
+                    <a href="/view_report/{{events[1].meeting_id}}" style="color: blue;"><em>click here</em></a>
                 </p>
             </div>
-
     </div>
         <div class="row">
             <div class="col">

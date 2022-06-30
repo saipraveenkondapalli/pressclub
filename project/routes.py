@@ -51,12 +51,12 @@ def dashboard():
         if current_user.type == "admin":
             dcount = User.query.filter_by(badge="1").count()
             rcount = User.query.filter_by(badge="2").count()
-            return render_template('admin/dashboard.html', next=next, dcount=dcount,
+            return render_template('admin/dashboard.html', events= events, dcount=dcount,
                                    rcount=rcount)
         elif current_user.type == "student":
-            return render_template('student/dashboard.html',events= events )
+            return render_template('student/dashboard.html', events = events)
         elif current_user.type == "coordinator":
-            return render_template('coordinator/dashboard.html', events= events)
+            return render_template('coordinator/dashboard.html', events = events)
         else:
             return "<h1>You are not authorized to access this page</h1>"
 
