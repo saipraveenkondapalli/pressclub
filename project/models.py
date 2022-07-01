@@ -5,6 +5,7 @@ from datetime import datetime
 import random
 import string
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -73,10 +74,11 @@ class Attendance(db.Model):
     status = db.Column(db.Integer, nullable=False)
 
 
-
-
-
-
-
-
-
+class Leave(db.Model):
+    __tablename__ = 'leave'
+    id = db.Column(db.Integer, primary_key=True, unique=True, nullable=False)
+    roll_no = db.Column(db.Integer, db.ForeignKey('users.id'))
+    name = db.Column(db.String(60), db.ForeignKey('users.name'))
+    meeting_id = db.Column(db.Integer, db.ForeignKey('events.meeting_id'))
+    reason = db.Column(db.String(60), nullable=False)
+    status = db.Column(db.Integer, nullable=False, default=0) # approved = 1 , pending = 0 , rejected = -1

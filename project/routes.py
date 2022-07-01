@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, session
 from flask_login import login_required, current_user, login_user, logout_user
 from project import app, db, bcrypt
-from project.models import User, Events
+from project.models import User, Events, Leave
 from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired, BadSignature
 from project.mails import forget_password_mail_async as send_mail
 
@@ -42,21 +42,26 @@ def login():
 def dashboard():
     if current_user.is_authenticated:
         events = Events.query.filter_by().order_by(Events.meeting_id.desc()).limit(2)
-        """ try:
-            next = events[0]
-            prev = events[1]
-            author = (next.author).split(',')[1]
-        except:
-            author = "no" """
+        if events:
+            status = Leave.query.filter_by(roll_no = current_user.username, meeting_id = events[0].meeting_id).first()
+            if status:
+                status = status.status
+                if status == 1:
+                    status = "Approved"
+
+                elif status == -1:
+                    status = "Rejected"
+                else:
+                    status = "Pending"
         if current_user.type == "admin":
             dcount = User.query.filter_by(badge="1").count()
             rcount = User.query.filter_by(badge="2").count()
             return render_template('admin/dashboard.html', events= events, dcount=dcount,
                                    rcount=rcount)
         elif current_user.type == "student":
-            return render_template('student/dashboard.html', events = events)
+            return render_template('student/dashboard.html', events = events, status = status)
         elif current_user.type == "coordinator":
-            return render_template('coordinator/dashboard.html', events = events)
+            return render_template('coordinator/dashboard.html', events = events, status= status)
         else:
             return "<h1>You are not authorized to access this page</h1>"
 
@@ -103,15 +108,6 @@ def reset_password(token):
         flash("Invalid link")
         return redirect(url_for('forget_password'))
     return render_template('reset.html', username=user.name)
-
-
-@app.route("/test", methods=['GET', 'POST'])
-def test():
-    if request.method == "POST":
-        for x in request.form.getlist('check'):
-            print(x)
-
-    return render_template('test.html')
 
 
 @app.route("/change_password", methods=['GET', 'POST'])

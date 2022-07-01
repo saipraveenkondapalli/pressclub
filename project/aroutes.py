@@ -4,7 +4,7 @@ It is a collection of functions that are associated with the admin routes."""
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_required
 from project import app, db
-from project.models import User
+from project.models import User, Leave
 from datetime import datetime
 from project.mails import send_password
 from project.functions import user_attendance, user_absents
@@ -133,3 +133,23 @@ def team():
     else:
         return "You are not authorized to view this page"
 
+
+@app.route('/leave_applications/<id>', methods = ['GET', 'POST'])
+@login_required
+def leave_applications(id):
+    applications = Leave.query.filter_by(meeting_id = id, status = 0).all()
+    absent = []
+    percentage = []
+    if applications:
+        for x in applications:
+            absent.append(user_absents(x.roll_no))
+            percentage.append(user_attendance(x.roll_no))
+    if request.method == "POST":
+        status = request.form['status'].split(',')
+        application = Leave.query.filter_by(roll_no = status[0], meeting_id = id).first()
+        if status[1] == '1':
+            application.status = 1
+        else:
+            application.status = -1
+        db.session.commit()
+    return render_template('admin/leave_applications.html', applications= applications, absents = absent, percentage = percentage, id= id)

@@ -14,12 +14,14 @@
                 <div class="card-body" style="height: 320px;">
                     <h4 class="card-title">Next Meeting</h4>
                     <p class="card-text" style="color: black; font-style: italic">
-                        <em>Meeting No: {{events[0].meeting_id}}</em>
-                        <br>Title: {{events[0].title}}
-                        <br><em>Venue: {{events[0].venue}}</em>
-                        <br><em>Date: {{events[0].date}}</em>
-                        <br><em>Timings: {{events[0].time}}</em>
+                     <em><strong>Meeting No: </strong>{{events[0].meeting_id}}</em>
+                     <br><em><strong>Title:</strong>{{events[0].title}}</em>
+                    <br><em><strong>Venue: </strong>{{events[0].venue}}</em>
+                    <br><em><strong>Date: </strong>{{events[0].date}}</em>
+                    <br><em><strong>Timings: </strong>{{events[0].time}}</em>
+                    <br><em><strong>Leave Status:</strong>{{ status }}</em>
                     </p>
+                <a class="card-link" href="/leave_request/{{events[0].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Apply Leave</em></a>
                     {% if current_user.username == (events[0].author).split(',')[1] %}
                     <a class="card-link" href="/write_report/{{events[0].m3weeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
                     {% endif %}

@@ -1,14 +1,10 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
-import datetime
-from werkzeug.utils import secure_filename
-
 
 # Instance of the Flask application
 app = Flask(__name__)
@@ -51,4 +47,6 @@ login_manager.login_view = 'login'
 UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static/uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'raw', 'webp'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 

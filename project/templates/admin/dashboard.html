@@ -7,6 +7,7 @@
     <div class="container">
         <h1 style="margin-top: 100px;"><em>{{current_user.name}}'s Dashboard&nbsp;</em></h1>
     </div>
+    {% if events[0] %}
     <div class="container">
         <div class="card">
             <div class="card-body" style="margin-top: 10px;border-style: none;">
@@ -16,11 +17,15 @@
                     <strong>Meeting No: </strong>{{events[0].meeting_id}}</em><br><em>
                     <strong>Venue: </strong>{{events[0].venue}}</em><br><em>
                     <strong>Date: </strong>{{events[0].date}}</em><br>
-                    <strong><em>Timings: </strong>{{events[0].time}}</em><br><br></p>
+                    <strong><em>Timings: </strong>{{events[0].time}}<br><br>
+                    <a class="card-link" href="/leave_applications/{{ events[0].meeting_id}}    " style="color: blue;font-style: italic;text-decoration:underline;"><em>Leave Applications</em></a>
                 </p>
             </div>
         </div>
     </div>
+    {% endif %}
+
+    {% if events[1] %}
     <div class="container" style="margin-top: 20px;">
         <div class="card">
             <div class="card-body">
@@ -37,6 +42,8 @@
                 </p>
             </div>
     </div>
+    {% endif %}
+    <div class = "container">
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -68,4 +75,7 @@
         </div>
     </div>
 </div>
+
+    </div>
+
 {% endblock %}

@@ -5,7 +5,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_required, logout_user
 from sqlalchemy.exc import IntegrityError
 from project import app, db, bcrypt, ALLOWED_EXTENSIONS
-from project.models import User, Events, Attendance
+from project.models import User, Events, Attendance, Leave
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
@@ -168,7 +168,7 @@ def attendance(id):
             if event.attendance:
                 return f"""<script>window.alert('Attendance Taken');window.location='/dashboard';</script>"""
             students = db.session.query(User).filter(User.type != "admin", User.active == "true").all()
-            return render_template('coordinator/attendance.html', id=event.meeting_id, students=students)
+            return render_template('coordinator/attendance.html', id=event.meeting_id, students=students,approved=Leave.query.filter_by(meeting_id = id, status = 1).all())
     else:
         return "You are not authorized to view this page"
 

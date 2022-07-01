@@ -1,0 +1,25 @@
+{% if current_user.type == 'student' %}
+    {%  extends "coordinator/coordinator_base.html" %}
+{% else %}
+    {% extends "student/student_base.html" %}
+{% endif %}
+
+
+{% block title %} Leave Application{% endblock %}
+{% block content %}
+ <div class="container" style="margin-top: 100px;">
+        <h1>Leave Application</h1>
+    </div>
+<div class = "container">
+    <form method="post">
+        <label class="form-label" ></label>
+            <h3>Meeting #{{event.meeting_id}}</h3>
+            <h3>Title :{{event.title}}</h3>
+            <h3>Date :{{event.date}}</h3>
+            <h3>Status:{{ status }}</h3>
+            <h4>Reason:</h4>
+   <textarea class="form-control" style="height: 300px;" name="reason" required="" ></textarea>
+<button class="btn btn-primary" type="submit" style="margin-top: 20px;background: blue;border-radius: 5px;">Apply</button>
+    </form>
+</div>
+{% endblock %}
