@@ -1,5 +1,8 @@
 from project import ALLOWED_EXTENSIONS, db
-from project.models import User, Attendance
+from project.models import User, Attendance, Leave
+
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -25,7 +28,5 @@ def user_absents(username):
         x = str(x)
         x = x.split('(')[1].split(',)')[0]
         absent += x + ','
-
+        absent = absent[:-1]
     return absent
-
-

@@ -6,6 +6,7 @@ from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired,
 from project.mails import forget_password_mail_async as send_mail
 
 
+
 @app.route('/')
 def index():
     admin = db.session.query(User.name).filter_by(type="admin").first()

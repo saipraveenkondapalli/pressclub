@@ -23,7 +23,7 @@
                     </p>
                 <a class="card-link" href="/leave_request/{{events[0].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Apply Leave</em></a>
                     {% if current_user.username == (events[0].author).split(',')[1] %}
-                    <a class="card-link" href="/write_report/{{events[0].m3weeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
+                    <a class="card-link" href="/write_report/{{events[0].meeting_id}}" style="color: BLUE;font-style: italic;text-decoration:  underline;"><em>Write Report</em></a>
                     {% endif %}
                     {% if current_user.username == (events[0].author).split(';')[1] %}
                         {% if events[0].report %}
