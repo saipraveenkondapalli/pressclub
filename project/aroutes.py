@@ -137,21 +137,24 @@ def team():
 @app.route('/leave_applications/<id>', methods = ['GET', 'POST'])
 @login_required
 def leave_applications(id):
-    applications = Leave.query.filter_by(meeting_id = id, status = 0).all()
-    absent = []
-    percentage = []
-    if applications:
-        for x in applications:
-            absent.append(user_absents(x.roll_no))
-            percentage.append(user_attendance(x.roll_no))
-    if request.method == "POST":
-        status = request.form['status'].split(',')
-        application = Leave.query.filter_by(roll_no =status[0], meeting_id = id, status = 0).first()
-        if status[1] == '1':
-            application.status = 1
-        else:
-            application.status = -1
-        db.session.commit()
-        return redirect(request.url)  # returns to the same webpage
+    if current_user.type == "admin":
+        applications = Leave.query.filter_by(meeting_id = id, status = 0).all()
+        absent = []
+        percentage = []
+        if applications:
+            for x in applications:
+                absent.append(user_absents(x.roll_no))
+                percentage.append(user_attendance(x.roll_no))
+        if request.method == "POST":
+            status = request.form['status'].split(',')
+            application = Leave.query.filter_by(roll_no =status[0], meeting_id = id, status = 0).first()
+            if status[1] == '1':
+                application.status = 1
+            else:
+                application.status = -1
+            db.session.commit()
+            return redirect(request.url)  # returns to the same webpage
 
-    return render_template('admin/leave_applications.html', applications= applications, absents = absent, percentage = percentage, id= id)
+        return render_template('admin/leave_applications.html', applications= applications, absents = absent, percentage = percentage, id= id)
+    else:
+        return "you are not authorised to access this page"
