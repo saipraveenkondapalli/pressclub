@@ -1,10 +1,13 @@
+import datetime
 import os
-from flask import Flask
+from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, login_required
 from flask_mail import Mail
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
+
+
 
 # Instance of the Flask application
 app = Flask(__name__)
@@ -49,4 +52,8 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'raw', 'webp'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-
+#limits user sessions to 24 hours
+@app.before_request
+def make_session_permanant():
+    session.permanent = True
+    app.permanent_session_lifetime = datetime.timedelta(hours= 24)
