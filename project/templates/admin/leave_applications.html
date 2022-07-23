@@ -15,11 +15,11 @@
                         <strong>Roll No:</strong> {{applications[x].roll_no}}<br>
                         <strong>Reason:</strong> {{ applications[x].reason }}<br>
                         <strong>Attendance:</strong> {{ percentage[x] }}<br>
-                        <strong>Absents: </strong>{{ absents[x] }}
+                        <strong>Absent for Meetings: </strong>{{ absents[x] }}
                     </p>
                     <h6 class="text-muted card-subtitle mb-2"></h6>
-                    <button class="btn btn-primary" type="submit" style="margin-top: 10px;margin-bottom: 1px;background: blue;border-radius: 5px;" name = "status" value="{{applications[x].roll_no }},1">Approve</button>
-                    <button class="btn btn-primary" type="submit" style="margin-top: 10px;margin-bottom: 1px;background: blue;border-radius: 5px;" name = "status" value="{{ applications[x].roll_no }},-1">Reject</button>
+                    <button class="btn btn-primary" type="submit" style="margin-top: 10px;margin-bottom: 1px;background: limegreen;border-radius: 5px;" name = "status" value="{{applications[x].roll_no }},1">Approve</button>
+                    <button class="btn btn-primary" type="submit" style="margin-top: 10px;margin-bottom: 1px;background:#F44336;border-radius: 5px;" name = "status" value="{{ applications[x].roll_no }},-1">Reject</button>
                 </div>
             </div>
             {% endfor %}

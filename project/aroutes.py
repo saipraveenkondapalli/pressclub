@@ -1,14 +1,16 @@
 """ aroutes is short admin routes for the webapp.
 It is a collection of functions that are associated with the admin routes."""
 
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import render_template, request, redirect, flash
 from flask_login import current_user, login_required
 from project import app, db
 from project.models import User, Leave
 from datetime import datetime
 from project.mails import send_password
-from project.functions import user_attendance, user_absents
+from project.functions import user_attendance, user_absents  # importing custom functions from functions.py
 
+
+# Access control for only for admin user
 @app.route('/add_member', methods=['GET', 'POST'])
 @login_required
 def add_member():
@@ -43,6 +45,7 @@ def add_member():
         return "You are not authorized to view this page"
 
 
+# profile page for admin
 @app.route('/admin_profile', methods=['GET', 'POST'])
 @login_required
 def admin_profile():
@@ -64,48 +67,54 @@ def admin_profile():
         return "You are not authorized to view this page"
 
 
+# coordinator assignment page for admin and accessiable only for admin
 @app.route('/assign_coordinator', methods=['GET', 'POST'])
 @login_required
 def assign_coordinator():
     if current_user.type == "admin":
         if request.method == 'POST':
             try:
-                roll_no = request.form['roll_no'].lower()
-                user = User.query.filter_by(username=roll_no).first()
-                user.type = "coordinator"
+                roll_no = request.form['roll_no'].lower()  # takes value from the html page with input name roll_no
+                user = User.query.filter_by(username=roll_no).first()  # Query the Users table and get the user details
+                user.type = "coordinator"  # change the type of the user to coordinator
                 db.session.commit()
-                flash(f'{user.name} successfully assigned as coordinator!', 'success')
+                flash(f'{user.name} successfully assigned as coordinator!',
+                      'success')  # flash the message to the admin page
             except:
+                # if the user is not found in the database, then flash the error message to the admin page
                 flash('Error assigning coordinator!', 'danger')
         return render_template('admin/assign_coordinator.html')
     else:
         return "You are not authorized to view this page"
 
 
+# Remove Coordinator access for admin
 @app.route('/revoke_coordinator', methods=['GET', 'POST'])
 @login_required
 def revoke_coordinator():
     if current_user.type == "admin":
-        coordinators = User.query.filter_by(type="coordinator")
+        coordinators = User.query.filter_by(type="coordinator")  # Access the users table and get all the coordinators
         if request.method == 'POST':
             try:
-                roll_no = request.form['roll_no'].lower()
+                roll_no = request.form['roll_no'].lower()  # takes value from the html page with button value roll_no
+                # and converts to lower case if the user enters in upper case
                 user = User.query.filter_by(username=roll_no).first()
-                user.type = "student"
+                user.type = "student"  # change the type of the user to student
                 db.session.commit()
                 return f"""<script>alert('{user.name} successfully revoked as coordinator!'); window.location= '{request.url}'</script>"""
             except:
                 return f"""<script>alert('Error revoking coordinator!'); window.location= '{request.url}'</script>"""
-        return render_template('admin/revoke_coordinator.html', coordinators=coordinators )
+        return render_template('admin/revoke_coordinator.html', coordinators=coordinators)
     else:
         return "You are not authorized to view this page"
+
 
 @app.route('/team', methods=['GET', 'POST'])
 @login_required
 def team():
     if current_user.type == "admin":
+        """ team is a function that displays the team members of the club."""
         if request.method == 'POST':
-
             department = request.form['department']
             year = request.form['year']
             year1 = year
@@ -130,31 +139,39 @@ def team():
                                    year=year1)
 
         return render_template('admin/team.html')
+
     else:
         return "You are not authorized to view this page"
 
 
-@app.route('/leave_applications/<id>', methods = ['GET', 'POST'])
+# Application Leave page for admin to either approve or reject the application
+@app.route('/leave_applications/<id>', methods=['GET', 'POST'])
 @login_required
 def leave_applications(id):
     if current_user.type == "admin":
-        applications = Leave.query.filter_by(meeting_id = id, status = 0).all()
-        absent = []
-        percentage = []
+        applications = Leave.query.filter_by(meeting_id=id,
+                                             status=0).all()  # get all the applications for the meeting with id
+        absent = []  # list to store the absentees
+        percentage = []  # list to store the percentage of absentees
         if applications:
             for x in applications:
-                absent.append(user_absents(x.roll_no))
-                percentage.append(user_attendance(x.roll_no))
+                absent.append(user_absents(
+                    x.roll_no))  # get the absentees of the application using user_absents function, check functions.py
+                percentage.append(user_attendance(
+                    x.roll_no))  # get the percentage of the absentees using user_attendance function, check functions.py
+
+        #  checks the input from the admin page and updates the status of the application
         if request.method == "POST":
             status = request.form['status'].split(',')
-            application = Leave.query.filter_by(roll_no =status[0], meeting_id = id, status = 0).first()
-            if status[1] == '1':
+            application = Leave.query.filter_by(roll_no=status[0], meeting_id=id, status=0).first()
+            if status[1] == '1':  # if the admin approves the application
                 application.status = 1
             else:
-                application.status = -1
+                application.status = -1  # if the admin rejects the application
             db.session.commit()
-            return redirect(request.url)  # returns to the same webpage
+            return redirect(request.url)  # redirects  to the same webpage(applications page)
 
-        return render_template('admin/leave_applications.html', applications= applications, absents = absent, percentage = percentage, id= id)
+        return render_template('admin/leave_applications.html', applications=applications, absents=absent,
+                               percentage=percentage, id=id)
     else:
         return "you are not authorised to access this page"
