@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Add New Member{% endblock %}
+{% block content %}
+
+<div class="container">
+        <div class="row d-flex d-xl-flex justify-content-center justify-content-xl-center" style="padding-bottom: 20px;padding-top: 30px;margin-top: 80px;">
+            <div class="col-sm-12 col-lg-10 col-xl-9 col-xxl-7 bg-white shadow-lg" style="border-radius: 5px;padding-bottom: 30px;">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h4 class="text-dark mb-4">Add New Team Member</h4>
+                    </div>
+<form  method="post" class="user" style="height: 150px;padding-top: 100px;">
+
+<div class="mb-3">
+    <input class="form-control form-control-user" type="email" name ="email" id="email" placeholder="Email Address" required="">
+</div>
+                        <div class="row mb-3">
+                            <p id="emailErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+                            <p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
+                        </div>
+
+    <hr><button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit" style="background: blue;border-radius: 5px;">Register</button>
+    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <ul class=flashes style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-style: italic;">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% endwith %}
+
+</form>
+                </div>
+
+
+{% endblock %}

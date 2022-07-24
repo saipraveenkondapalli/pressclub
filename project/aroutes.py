@@ -1,12 +1,11 @@
 """ aroutes is short admin routes for the webapp.
 It is a collection of functions that are associated with the admin routes."""
 
-from flask import render_template, request, redirect, flash
+from flask import render_template, request, redirect, flash, url_for
 from flask_login import current_user, login_required
 from project import app, db
 from project.models import User, Leave
-from datetime import datetime
-from project.mails import send_password
+from project.mails import new_user_mail as send_mail
 from project.functions import user_attendance, user_absents  # importing custom functions from functions.py
 
 
@@ -19,28 +18,13 @@ def add_member():
     """
     if current_user.type == "admin":
         if request.method == 'POST':
-            try:
-                roll_no = request.form['roll_no'].lower()
-                name = request.form['name']
-                email = request.form['email']
-                department = request.form['department']
-                year = request.form['graduation_year']
-                phone = request.form['phone']
-                password_hash = User.generate_password()
-                user = User(username=roll_no, name=name, email=email, department=department,
-                            batch=year, phone=phone, type="student",
-                            joining_date=datetime.today().strftime("%d-%m-%Y"),
-                            active="true", password_hash=password_hash)
-                db.session.add(user)
-                db.session.commit()
-                send_password(email)
-                flash('User successfully added!')
-                send_password(email)
-                flash('Email sent successfully with password link!')
-            except:
-                return f"""<script>alert('User with Roll No or Email Id already Exists!'); window.location= '{request.url}'</script>"""
-
-        return render_template('admin/add_member.html')
+            if User.query.filter_by(email=request.form['email']).first():
+                flash("Email already exists")
+                return redirect(url_for('add_member'))
+            else:
+                send_mail(request.form['email'])
+                flash("Mail sent successfully")
+        return render_template('admin/new_member.html')
     else:
         return "You are not authorized to view this page"
 

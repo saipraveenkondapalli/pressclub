@@ -3,8 +3,8 @@ from flask_login import login_required, current_user, login_user, logout_user
 from project import app, db, bcrypt
 from project.models import User, Events, Leave
 from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired, BadSignature
-from project.mails import forget_password_mail_async as send_mail
-
+from project.mails import forget_password_mail_async as send_mail, send_password
+from datetime import datetime
 
 
 @app.route('/')
@@ -23,7 +23,7 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].lower()
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user:
@@ -70,7 +70,7 @@ def dashboard():
 @app.route('/forget_password', methods=['GET', 'POST'])
 def forget_password():
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].lower()
         user = User.query.filter_by(username=username).first()
         if user:
             send_mail(user.email)
@@ -162,3 +162,41 @@ def change_passowrd():
         return render_template('admin/change_password.html')
     else:
         return """<script>alert("Invalid user type");window.location='/';</script>"""
+
+
+# Register a new user
+@app.route('/new_user/token?<token>', methods=['GET', 'POST'])
+def new_user(token):
+    s = Serializer(app.config['SECRET_KEY'])
+    try:
+        email = s.loads(token, salt='new-user', max_age = 86400)  # 86400 seconds = 24 hours, token is valid for 24 hours
+    except SignatureExpired:
+        return "<h1>Your link has expired</h1>"
+    except BadSignature:
+        return "<h1>Invalid link</h1>"
+
+    if request.method == 'POST':
+        try:
+            roll_no = request.form['roll_no'].lower()
+            name = request.form['name']
+            email = email
+            department = request.form['department']
+            year = request.form['graduation_year']
+            phone = request.form['phone']
+            password_hash = User.generate_password()
+            user = User(username=roll_no, name=name, email=email, department=department,
+                       batch=year, phone=phone, type="student",
+                        joining_date=datetime.today().strftime("%d-%m-%Y"),
+                        active="true", password_hash=password_hash)
+            db.session.add(user)
+            db.session.commit()
+            send_password(email)  # send an email with password link
+            flash('User successfully added!')
+            flash('Email sent successfully with password link!')
+            return redirect(url_for('login'))
+        except:
+           return f"""<script>alert('User with Roll No or Email Id already Exists!'); window.location= '{request.url}'</script>"""
+    if request.method == "GET" and not User.query.filter_by(email=email).first():  # checks whether the user is already registered with email and assess if the user already exists
+        return render_template('admin/add_member.html', email = email)
+    else:
+        return "Token Already Used"
