@@ -7,17 +7,19 @@
         <h1>Report for Meeting #{{event.meeting_id}}</h1>
         <div class="row">
             <div class="col">
-                <h2>Title:{{event.title}}</h2>
-                <h2>Venue:{{event.venue}}</h2>
-                <h3>Attendance:{{ event.attendance }}</h3>
-                <h3>Author:{{event.author}}</h3>
+                <p>
+                    <strong>Title:</strong>{{event.title}}<br>
+                    <strong>Venue:</strong>{{event.venue}}<br>
+                    <strong>Attendance:</strong>{{ event.attendance }}<br>
+                    <strong>Author:</strong>{{event.author}}<br>
+                </p>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <img class = "img-fluid" loading="auto" style="margin-top: 20px;margin-bottom: 20px;"src="/static/uploads/{{event.image}}">
+                        <img class = "img-fluid" loading="auto" style="margin-top: 20px;"src="/static/uploads/{{event.image}}">
                     </div>
                 </div>
                 <p style="margin-top: 50px;">{{ event.report }}</p>
@@ -25,8 +27,10 @@
             </div>
         </div>
     </div>
-{% endblock %}
 
+
+
+{% endblock %}
 {% else %}
 <script>alert("Report not Ready!"); window.location = '/reports';</script>
 {% endif %}

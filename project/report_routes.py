@@ -1,12 +1,10 @@
-from flask import render_template, request, redirect, url_for, flash, session
-from flask_login import login_required, current_user, login_user, logout_user
-from project import app, db, bcrypt
-from project.models import User, Events
-from itsdangerous import URLSafeTimedSerializer as Serializer, SignatureExpired, BadSignature
-from project.mails import forget_password_mail_async as send_mail
-from project.functions import allowed_file
-from werkzeug.utils import secure_filename
 import os
+from flask import render_template, request, redirect, flash
+from flask_login import login_required, current_user
+from werkzeug.utils import secure_filename
+from project import app, db
+from project.functions import allowed_file, grammar_check_api
+from project.models import Events
 
 
 @app.route('/reports', methods=['GET', 'POST'])
@@ -50,7 +48,7 @@ def write_report(id):
             event.image = filename
             db.session.commit()
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return """<script>alert("Report submitted successfully");window.location='/reports';</script>"""
+        return f"""<script>alert("Report submitted successfully");window.location='{request.url}';</script>"""
 
         # -------------------------------------END OF IMAGE UPLOAD HANDLING -------------------------------
     if event:
@@ -79,4 +77,13 @@ def view_report(id):
             return render_template('view.html', event=event)
     else:
         return """<script>alert("Invalid meeting id");window.location='/dashboard';</script>"""
+
+
+@app.route('/grammar_check/<text>', methods=['GET'])
+def grammar_check(text):
+
+    return grammar_check_api(text)
+
+
+
 
