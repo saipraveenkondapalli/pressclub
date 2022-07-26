@@ -2,7 +2,7 @@ import json
 import requests
 from project import ALLOWED_EXTENSIONS, db
 from project.models import Attendance
-
+import os
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -35,16 +35,16 @@ def user_absents(username):
 
 def grammar_check_api(text):
     url = "https://dnaber-languagetool.p.rapidapi.com/v2/check"
-
     payload = f"language=en-US&text={text}"
     headers = {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": "0169cbd2d8msh86f79edba7e8babp1b4554jsn9361e558f24b",
+        "X-RapidAPI-Key": os.environ.get('LANG-API-KEY'),
         "X-RapidAPI-Host": "dnaber-languagetool.p.rapidapi.com"
     }
 
     response = requests.request("POST", url, data=payload, headers=headers)
     result = json.loads(response.text)
+
 
     f = open("result.html", "w")
     f.write("""
